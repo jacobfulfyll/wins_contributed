@@ -1,15 +1,20 @@
 # NBA Wins Contributed Statistic 
 
-In every sport determining which player reigns supreme is on the forefront of fans minds. In no sport is this more prevelant than basketball. Debates constantly rage about who the greatest player of all time is, who should be MVP this year, and who the best player in the world is right now. Due to many moving pieces within the game, the different ways players provide value, and the difference in team compositions value in the NBA is difficult to quantify and makes these debates very subjective. Take this years MVP race, four of the current MVP front runners Giannis Antetokounmpo, James Harden, Kevin Durant, and Paul George highlight four characteristics people usually attribute to MVP. 
+In every sport determining which player reigns supreme is on the forefront of fans minds. In no sport is this more prevelant than basketball. Debates constantly rage about who the greatest player of all time is, who should be MVP this year, and who the best player in the world is right now. Due to many moving pieces within the game, the different ways players provide value, and the difference in team compositions value in the NBA is difficult to quantify and makes these debates very subjective. Take this years MVP race, five of the current MVP front runners Giannis Antetokounmpo, James Harden, Kevin Durant, Paul George, and Nikola Jokic highlight four characteristics people usually attribute to MVP. 
 
 1. **Giannis Antetokounmpo** - The best player on the best team in the league.
 2. **James Harden** - The player doing everything for their team.
 3. **Kevin Durant** - The best player in the world. Usually this is Lebron James (IMO).
 4. **Paul George** - The best two-way (combined offensive and defensive) player.
+5. **Nikola Jokic** - The feel-good, surprise contender, with actual skill
 
 As a result of basketball's intricacies, many stats exist to rank the best individual players in the league. These stats like Player Efficiency Rating (PER), Player Impact Estimate (PIE), Win Shares, Value Over Replacement Player (VORP), and Box Score Plus/Minus (BPM) all present unique ways to evaluate talent. With all of the advanced metrics out there and computing never more powerful, there are surprisingly few advanced metrics that place an emphasis on winning, game by game analysis, possession by possession outcomes, team composition, and durability.
 
 # Introducing Wins Contributed
+
+Wins contributed measures players contribution to every win. By doing this, we can graph the MVP race for any given year game by game. Below is a video showing the MVP race for 2018-2019:
+
+![Alt Text](MVP_Races/2018-19.gif)
 
 By making each game a seperate entity with a definitive outcome, Wins Contributed aims to show how many wins a player contributes to his team over the course of any given time period. It is calculated on a game by game basis using 6 distinct steps. A summary of the steps is provided below, but if you're looking for a complete calculation, **click here**
 
