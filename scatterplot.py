@@ -30,7 +30,7 @@ conn.close()
 rand_players = random.sample(range(11, int(len(season_df)-len(season_df)*.5)), 5) + list(range(10))
 # Top 15 and 5 random labels #### random.sample(range(16, int(len(season_df)-len(season_df)*.5)), 5) + list(range(15))
 
-sns.set(rc={'figure.figsize':(20,15)})
+#sns.set(rc={'figure.figsize':(20,15)})
 p1 = sns.scatterplot(x="per_win", y="total_wins", data=season_df, hue='max_game', alpha=.5)
 
 for player in rand_players:
