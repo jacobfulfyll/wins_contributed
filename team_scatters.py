@@ -38,7 +38,7 @@ for team in teams:
     season_df = season_df[season_df['team_id'] == team_id]
     season_df = season_df.reset_index()
     rand_players = range(len(season_df))
-    filepath = 'scatterplots/2018-19/' + simple_name
+    filepath = 'Graphs/Team_Scatters/2018-19/' + simple_name
     fig = plt.figure()
     ax = fig.add_subplot(111)
     for i, player in enumerate(rand_players):

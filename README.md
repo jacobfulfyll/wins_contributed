@@ -12,9 +12,12 @@ As a result of basketball's intricacies, many stats exist to rank the best indiv
 
 # Introducing Wins Contributed
 
-Wins contributed measures players contribution to every win. By doing this, we can graph the MVP race for any given year game by game. Below is a video showing the MVP race for 2018-2019:
+Wins contributed measures players contribution in every win. By doing this, we can graph the MVP race for any given year game by game. Below is a video showing the MVP race using Wins contributed for games 119 through 1023 in the 2018-2019 regular season. If you would like to see the full video and videos for other years, **click here**:
 
-![Alt Text](MVP_Races/2018-19.gif)
+![Alt Text](Graphs/MVP_Races/2018-19.gif)
+
+
+## How is this calculated? 
 
 By making each game a seperate entity with a definitive outcome, Wins Contributed aims to show how many wins a player contributes to his team over the course of any given time period. It is calculated on a game by game basis using 6 distinct steps. A summary of the steps is provided below, but if you're looking for a complete calculation, **click here**
 
@@ -55,44 +58,50 @@ By making each game a seperate entity with a definitive outcome, Wins Contribute
     - Wins Contributed = Player Value / Sum Of All Player Values
       - The wins each player contributes in a given game is their percentage of the total value in the game.
 
-# Why This Is Cool
+# What good is this?
 
-Unlike many other stats, Wins Contributed does not purely value efficiency, team performance, or counting specific metrics, rather it attempts to blend all three. 
+**Unlike many other stats, Wins Contributed does not purely value efficiency, team performance, or counting specific metrics, rather it attempts to blend all three.**
+  - From an efficiency perspective it rewards players for their contributions, penalizes them for their failings and relates it all to the value of a possession in the associated game. 
+  - It values team performance above all because you only receive points when your team wins. It also incorporates team performance by factoring in the how the team performs while each player is on the floor. 
+  - Finally it values counting stats although not in a typical way. Wins contributed turns most of the typical counting stats into efficiency based metrics, but values longevity and durability by counting the amount of wins players contribute. By doing this it gives credit to players who have had successful NBA careers on great teams, but may have been overlooked for one reason or another. It points out who actually does what matters most in basketball and all sports, win the game.
 
-From an efficiency perspective it rewards players for their contributions, penalizes them for their failings, and relates it all to the value of a possession in the associated game. 
+### League and Team Scatter Plots
+Creating scatter plots with the sum of a player's wins contributed and their average wins contributed per win shows both who contributes the most in a single win and who has contributed the most to wins in total. Additonally, next to players name is a number which represents their max win contribution for any single game on the entire season. This gives us an idea of who has the capacity to contribute in a big way, even if they don't do it consistently yet. Below is the 2018-19 Season. 15 players have been labeled, 10 with the highest wins for a single game and 5 randomly generated.
 
-It values team performance above all because you only receive points when your team wins. It also incorporates team performance by factoring in the how the team performs while each player is on the floor. 
+![Alt Text](Graphs/Season_Scatters/2018-19.png)
 
-Finally it values counting stats although not in a typical way. Wins contributed turns most of the typical counting stats into efficiency based metrics, but values longevity and durability by counting the amount of wins players contribute. By doing this it gives credit to players who have had successful NBA careers on great teams, but may have been overlooked for one reason or another. It points out who actually does what matters most in basketball and all sports, win the game.
+This also allows us to see team contributions in from a new perspective. Below you'll see the contributions for each player on the Los Angeles Lakers and Golden State Warriors:
 
-Because it is calculated on a per game basis it can provide a nightly look at players who contributed the most to their team in any given night. 
+![Alt Text](Graphs/Team_Scatters/2018-19/Lakers.png) ![Alt Text](Graphs/Team_Scatters/2018-19/Warriors.png)
 
-At the end of the day it values wins and compares each player to their teammates. Because of this, it has the unique ability to compare players across generations throughout different points in their career. 
-
-With wins being correlated to team's financial success, pegging wins contributed to the amount of dollars earned for each player gives insight into which players are the most under and over paid.
-
-Comparing playoff performance to regular season performance will be interesting to how people's skillsets translate from the regular season to the big stage.
-
-Lastly, this can also be run for losses. Comparing how players play in losses and who is the best loser should also provide interesting insights.
+### Insight Still To Come
+1. Nightly Best Players Tool:
+  - Because Wins Contributed is calculated on a per game basis it can provide a nightly look at players who contributed the most to their team in any given night. 
+2. Career Arc Comparison:
+  - At the end of the day it values wins and compares each player to their teammates. Because of this, it has the unique ability to compare players across generations throughout different points in their career. 
+3. Contract Value Contributiosn:
+  - With wins being correlated to team's financial success, pegging wins contributed to the amount of dollars earned for each player gives insight into which players are the most under and over paid.
+4. Regular Season vs Playoffs:
+  - Everyone who watches the NBA knows regular season success doeesn't always translate to playoff success. Win's contributed provides a way to compare how players skillsets transition from the grind of the regular season to the competitiveness of the playoffs.
+5. Value Contributed In Losses:
+  - Which players contribute a lot of value in losses. Is there a differen in how some players perform in losses compared with wins? Finding out the value players contirbute in losses can give us a fuller picture of value through Wins Contributed.
 
 # What Are The Flaws
 
 No stat is perfect, so what are the flaws in Wins Contributed?
 
-The biggest flaw in my opinion is the inability to value defense, especially perimeter defense. It gives credit for steals, blocks, and defended field goals, but can't adequately measure "individually bad defense." This is challenging for all basketball stats, so I was okay making a concession in this area.
+1. *Inadequacy in valuing defense, especially perimeter defense:*
+  - Wins Contributed gives credit for steals, blocks, and defended field goals, but can't adequately measure "individually bad defense." This is challenging for all basketball stats, so I was okay making a concession in this area.
+2. *Evaluating players compared to teammates on a game by game basis:*
+  - I believe this can be seen as a weakness, but was also something I wanted to be in the stat. Playing basketball myself, I'm biased towards believing players have on days and off days, so at least one stat should evaluate players on a game by game basis. However, this runs the risk of penalizing or rewarding players based on luck by looking at outcomes on such a small sample size. I do believe over the long run you will get interesting aggregate information that may differ from the agreggate information collected on a seasonal basis and it will hopefully be more true to reality, luck included.
+3. *0 Wins For The Worst Player:*
+  - Because it evaluates most of the metrics on efficiency and deems that the player with the lowest value provided at the end of the game earns 0 Wins Contributed, superstars having bad games will sometimes end up with duds. They make and miss more shots than players with smaller roles and have the ball more to do both great and terrible things on the court. 
+4. *Arbitrary Percentages For Value Contributions:* 
+  - This is easy when there is only one person responsible for a positive or negative outcome. If James Harden turns the ball over, he loses the entire value of that possession, if he hits an unassisted shot that wasn't preceded by an offensive rebound he received the entire value of the points he created minus the value of a possession. When multiple players are involved, each player receives or loses a percentage of that value created or lost. The big flaw is that those percentages are fixed and although seemingly logical, they are arbitrary. Eventually the goal is to complete more sophisticated modeling to test various percentage splits to come up with percentages that best reflect reality.
+5. *Lack of Fringe Statistics:* 
+  - Wins Contributed does not consider some fringe intangible statistics, things like loose balls, boxouts, and deflections which certainly provide value towards winning basketball games. I hope to add these by the beginning of the 2019-2020 season.
 
-It evaluates players compared to teammates on a game by game basis. I believe this can be seen as a weakness, but it was also something I wanted to be in the stat. Playing basketball myself, I'm biased towards believing players have on days and off days, so at least one stat should evaluate players on a game by game basis. However, this runs the risk of penalizing or rewarding players based on luck by looking at outcomes on such a small sample size. I do believe over the long run you will get interesting aggregate information that may differ from the agreggate information collected on a seasonal basis and it will hopefully be more true to reality, luck included.
-
-Because it evaluates most of the metrics on efficiency and deems that the player with the lowest value provided at the end of the game earn 0 Wins Contributed, superstars having bad games will sometimes end up with 0 wins contributed. They make and miss more shots than players with smaller roles and have the ball more to do both great and terrible things on the court. 
-
-Each player receives a percentage of value created or lost. This is easy when there is only one person responsible for a positive or negative outcome. If James Harden turns the ball over, he loses the entire value of that possession, if he hits an unassisted shot that wasn't preceded by an offensive rebound he received the entire value of the points he created minus the value of a possession. When multiple players are involved, each player receives or loses a percentage of that value created or lost. The big flaw is that those percentages are fixed and although seemingly logical, they are arbitrary. Eventually the goal is to do some modeling and test various percentage splits to come up with percentages that best reflect reality.
-
-It does not consider some fringe intangible statistics, things like loose balls, boxouts, and deflections which certainly provide value towards winning basketball games. 
-
-I'm sure there are plenty more, so if you're reading this and think of any, let me know!
-
-
-## Output Table
+# Which Player Has Contributed The Most Wins over The Last Three Seasons?
 
 Below is the actual output table from the first game of the 2018-2019 season between the Boston Celtics and the Philadelphia 76ers. It shows how much of a players game_value score was provided by each of the stats analyzed, the actual Game Value Score, and finally the Wins Contributed:
 
@@ -111,16 +120,5 @@ Below is the actual output table from the first game of the 2018-2019 season bet
 |Semi Ojeleye      | 0         | 0         | 0           | 0.30        |  0       |   0        |            0 |       0   |         0 |          0 |            0 |               0 |               0 |     0.30    |  0.004     |
 |Guerschon Yabusele| 0         | 0         | 0           | 0           |  0       |   0        |            0 |       0   |         0 |          0 |            0 |               0 |               0 |            0|  0.004     |
 |Brad Wanamaker    | 1.10      | 0         | 0           | 0.30        |  0       |   0        |            0 |       0   |         0 |          0 |            0 |               0 |               0 |      1.40   |   0.002    |
-
-
-
-
-
-
-
-
-
-
-When viewed over the course of a regular season, my wins contributed stat give another way to evaluate the MVP race through statistics. When evaluated over the course of a career, it shows how much winning a player was responsible for. When averaged and compared over these time frames, it can show which players make large impacts on the basketball court that for some reason don't translate to actual wins. It shows how players on teams with big threes and fours compare to players
 
 
