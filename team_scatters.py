@@ -19,7 +19,7 @@ season_sort = """SELECT team_id,
                         SUM(wins_contr) AS TOTAL_WINS,
                         AVG(wins_contr) AS PER_WIN,
                         MAX(wins_contr) AS MAX_WIN
-                 FROM jacob_wins_2019_final
+                 FROM jacob_wins_2018_final
                  GROUP BY player_id, player_name, team_id
                  ORDER BY PER_WIN DESC"""
 
@@ -38,8 +38,8 @@ for team in teams:
     season_df = season_df[season_df['team_id'] == team_id]
     season_df = season_df.reset_index()
     rand_players = range(len(season_df))
-    filepath = 'Graphs/Team_Scatters/2018-19/' + simple_name
-    fig = plt.figure(figsize=(20,15))
+    filepath = 'Graphs/Team_Scatters/2017-18/' + simple_name
+    fig = plt.figure()
     ax = fig.add_subplot(111)
     for i, player in enumerate(rand_players):
         name = season_df.loc[player]['player_name']

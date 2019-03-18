@@ -17,7 +17,7 @@ season_sort = """SELECT team_id,
                         SUM(wins_contr) AS TOTAL_WINS,
                         AVG(wins_contr) AS PER_WIN,
                         MAX(wins_contr) AS Max_Game
-                 FROM jacob_wins_2018_final
+                 FROM jacob_wins_2019_final
                  GROUP BY player_id, player_name, team_id
                  ORDER BY Max_Game DESC"""
 
@@ -30,7 +30,7 @@ conn.close()
 rand_players = random.sample(range(11, int(len(season_df)-len(season_df)*.5)), 5) + list(range(10))
 # Top 15 and 5 random labels #### random.sample(range(16, int(len(season_df)-len(season_df)*.5)), 5) + list(range(15))
 
-sns.set(rc={'figure.figsize':(20,15)})
+#sns.set(rc={'figure.figsize':(20,15)})
 p1 = sns.scatterplot(x="per_win", y="total_wins", data=season_df, hue='max_game', alpha=.5)
 
 for player in rand_players:
@@ -46,8 +46,8 @@ for player in rand_players:
 plt.xlabel('Average Per Win')
 plt.ylabel('Total Wins')
 plt.legend(loc='upper left')
-plt.title("2017-18 Season")
-filepath = 'Graphs/Season_Scatters/2017-18'
+plt.title("2018-19 Season")
+filepath = 'Graphs/Season_Scatters/2018-19'
 plt.savefig(filepath)
 plt.show()
 
@@ -55,3 +55,4 @@ plt.show()
 
 # FROM IN SQL STATEMENT : CHANGE YEAR : LINE 20
 # FILE PATH LOCATION : CHANGE YEAR : LINE 50
+# GRAPH TITLE : CHANGE YEAR : LINE 49

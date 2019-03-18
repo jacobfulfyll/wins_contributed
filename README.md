@@ -1,6 +1,6 @@
 # NBA Wins Contributed Statistic 
 
-In every sport determining which player reigns supreme is on the forefront of fans minds. In no sport is this more prevelant than basketball. Debates constantly rage about who the greatest player of all time is, who should be MVP this year, and who the best player in the world is right now. Due to many moving pieces within the game, the different ways players provide value, and the difference in team compositions value in the NBA is difficult to quantify and makes these debates very subjective. Take this years MVP race, five of the current MVP front runners Giannis Antetokounmpo, James Harden, Kevin Durant, Paul George, and Nikola Jokic highlight four characteristics people usually attribute to MVP. 
+In every sport determining which player reigns supreme is on the forefront of fans minds. In no sport is this more prevelant than basketball. Debates constantly rage about who the greatest player of all time is, who should be MVP this year, and who the best player in the world is right now. Due to many moving pieces within the game, the different ways players provide value, and the difference in team compositions value in the NBA is difficult to quantify and makes these debates very subjective. Take this years MVP race, five of the current MVP front runners Giannis Antetokounmpo, James Harden, Kevin Durant, Paul George, and Nikola Jokic highlight five characteristics people usually attribute to MVP. 
 
 1. **Giannis Antetokounmpo** - The best player on the best team in the league.
 2. **James Harden** - The player doing everything for their team.
@@ -12,7 +12,7 @@ As a result of basketball's intricacies, many stats exist to rank the best indiv
 
 # Introducing Wins Contributed
 
-Wins contributed measures players contribution in every win. By doing this, we can graph the MVP race for any given year game by game. Below is a video showing the MVP race using Wins contributed for games 119 through 1023 in the 2018-2019 regular season. If you would like to see the full video, videos for other years, and plenty of other graphs describing previous NBA Season, [click here](https://github.com/jacobfulfyll/wins_contributed/tree/master/Graphs):
+Wins contributed measures players contribution in every win. By doing this, we can graph the MVP race for any given year game by game. Below is a video showing the MVP race using Wins contributed for games 119 through 1023 in the 2018-2019 regular season. If you would like to see the full video, videos for other years, and plenty of other graphs describing previous NBA Seasons, [click here](https://github.com/jacobfulfyll/wins_contributed/tree/master/Graphs):
 
 ![Alt Text](Graphs/MVP_Races/2018-19.gif)
 
@@ -68,22 +68,22 @@ By making each game a seperate entity with a definitive outcome, Wins Contribute
 ### League and Team Scatter Plots
 Creating scatter plots with the sum of a player's wins contributed and their average wins contributed per win shows both who contributes the most in a single win and who has contributed the most to wins in total. Additonally, next to players name is a number which represents their max win contribution for any single game on the entire season. This gives us an idea of who has the capacity to contribute in a big way, even if they don't do it consistently yet. Below is the 2018-19 Season. 15 players have been labeled, 10 with the highest wins for a single game and 5 randomly generated.
 
-![Alt Text](Graphs/Season_Scatters/2018-19_readme.png)
+![Alt Text](Graphs/Season_Scatters/2018-19.png)
 
 This also allows us to see team contributions in from a new perspective. Below you'll see the contributions for each player on the Los Angeles Lakers and Golden State Warriors:
 
-![Alt Text](Graphs/Team_Scatters/2018-19/Lakers_readme.png) ![Alt Text](Graphs/Team_Scatters/2018-19/Warriors_readme.png)
+![Alt Text](Graphs/Team_Scatters/2018-19/Lakers.png) ![Alt Text](Graphs/Team_Scatters/2018-19/Warriors.png)
 
 ### Insight Still To Come
-1. Nightly Best Players Tool:
+1. **Nightly Best Players Tool**:
     - Because Wins Contributed is calculated on a per game basis it can provide a nightly look at players who contributed the most to their team in any given night. 
-2. Career Arc Comparison:
+2. **Career Arc Comparison**:
     - At the end of the day it values wins and compares each player to their teammates. Because of this, it has the unique ability to compare players across generations throughout different points in their career. 
-3. Contract Value Contributiosn:
+3. **Contract Value Contributions**:
     - With wins being correlated to team's financial success, pegging wins contributed to the amount of dollars earned for each player gives insight into which players are the most under and over paid.
-4. Regular Season vs Playoffs:
+4. **Regular Season vs Playoffs**:
     - Everyone who watches the NBA knows regular season success doeesn't always translate to playoff success. Win's contributed provides a way to compare how players skillsets transition from the grind of the regular season to the competitiveness of the playoffs.
-5. Value Contributed In Losses:
+5. **Value Contributed In Losses**:
     - Which players contribute a lot of value in losses. Is there a differen in how some players perform in losses compared with wins? Finding out the value players contirbute in losses can give us a fuller picture of value through Wins Contributed.
 
 # What Are The Flaws
@@ -101,9 +101,9 @@ No stat is perfect, so what are the flaws in Wins Contributed?
 5. *Lack of Fringe Statistics:* 
     - Wins Contributed does not consider some fringe intangible statistics, things like loose balls, boxouts, and deflections which certainly provide value towards winning basketball games. I hope to add these by the beginning of the 2019-2020 season.
 
-# Which Player Has Contributed The Most Wins over The Last Three Seasons?
+# 2016 - 2019 Cumulative Wins Contributed
 
-Below is the actual output table from the first game of the 2018-2019 season between the Boston Celtics and the Philadelphia 76ers. It shows how much of a players game_value score was provided by each of the stats analyzed, the actual Game Value Score, and finally the Wins Contributed:
+The below table shows the cumulative Wins Contributed for every player over the last 3 seasons. Before the start of next season, I want to add every NBA season possible to find out who the regular season GOAT is!
 
 | Player           | Made_FG_Score | Ast_Score | Orebs_Score | Drebs_Score | TO_Score | Stls_Score | Blks_Score |  FT_Score | DFG_Score | Sast_Score | FT_Ast_score | Missed_FG_score | Def_Fouls_Score | Game_Value  | Wins_Contributed |
 |:----------------:|:---------:|:---------:|:-----------:|:-----------:|:--------:|:----------:|:------------:|:---------:|:---------:|:----------:|:------------:|:---------------:|:---------------:|:-----------:|:----------:|
