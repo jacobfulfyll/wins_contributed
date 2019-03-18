@@ -39,7 +39,7 @@ for team in teams:
     season_df = season_df.reset_index()
     rand_players = range(len(season_df))
     filepath = 'Graphs/Team_Scatters/2018-19/' + simple_name
-    fig = plt.figure()
+    fig = plt.figure(figsize=(20,15))
     ax = fig.add_subplot(111)
     for i, player in enumerate(rand_players):
         name = season_df.loc[player]['player_name']
@@ -57,3 +57,8 @@ for team in teams:
     plt.show()
 
 conn.close()
+
+## What To Change
+
+# FROM IN SQL STATEMENT : CHANGE YEAR : LINE 22
+# FILE PATH LOCATION : CHANGE YEAR : LINE 41

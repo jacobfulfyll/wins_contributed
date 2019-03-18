@@ -12,14 +12,14 @@ As a result of basketball's intricacies, many stats exist to rank the best indiv
 
 # Introducing Wins Contributed
 
-Wins contributed measures players contribution in every win. By doing this, we can graph the MVP race for any given year game by game. Below is a video showing the MVP race using Wins contributed for games 119 through 1023 in the 2018-2019 regular season. If you would like to see the full video and videos for other years, **click here**:
+Wins contributed measures players contribution in every win. By doing this, we can graph the MVP race for any given year game by game. Below is a video showing the MVP race using Wins contributed for games 119 through 1023 in the 2018-2019 regular season. If you would like to see the full video, videos for other years, and plenty of other graphs describing previous NBA Season, [click here](https://github.com/jacobfulfyll/wins_contributed/tree/master/Graphs):
 
 ![Alt Text](Graphs/MVP_Races/2018-19.gif)
 
 
 ## How is this calculated? 
 
-By making each game a seperate entity with a definitive outcome, Wins Contributed aims to show how many wins a player contributes to his team over the course of any given time period. It is calculated on a game by game basis using 6 distinct steps. A summary of the steps is provided below, but if you're looking for a complete calculation, **click here**
+By making each game a seperate entity with a definitive outcome, Wins Contributed aims to show how many wins a player contributes to his team over the course of any given time period. It is calculated on a game by game basis using 6 distinct steps. A summary of the steps is provided below, but if you're looking for a complete calculation, [click here](https://github.com/jacobfulfyll/wins_contributed/blob/master/fullCalculation.md)
 
   1. **Determine Which Team Won The Game**
     - In Wins Contributed only players on the winning team receive value
@@ -68,11 +68,11 @@ By making each game a seperate entity with a definitive outcome, Wins Contribute
 ### League and Team Scatter Plots
 Creating scatter plots with the sum of a player's wins contributed and their average wins contributed per win shows both who contributes the most in a single win and who has contributed the most to wins in total. Additonally, next to players name is a number which represents their max win contribution for any single game on the entire season. This gives us an idea of who has the capacity to contribute in a big way, even if they don't do it consistently yet. Below is the 2018-19 Season. 15 players have been labeled, 10 with the highest wins for a single game and 5 randomly generated.
 
-![Alt Text](Graphs/Season_Scatters/2018-19.png)
+![Alt Text](Graphs/Season_Scatters/2018-19_readme.png)
 
 This also allows us to see team contributions in from a new perspective. Below you'll see the contributions for each player on the Los Angeles Lakers and Golden State Warriors:
 
-![Alt Text](Graphs/Team_Scatters/2018-19/Lakers.png) ![Alt Text](Graphs/Team_Scatters/2018-19/Warriors.png)
+![Alt Text](Graphs/Team_Scatters/2018-19/Lakers_readme.png) ![Alt Text](Graphs/Team_Scatters/2018-19/Warriors_readme.png)
 
 ### Insight Still To Come
 1. Nightly Best Players Tool:

@@ -18,7 +18,7 @@ season_sort = """SELECT game_id::integer,
                  GROUP BY game_id, player_id, player_name, team_id
                  ORDER BY game_id"""
 
-                                                  
+# Change line 17 for a new year                                    
 
 season_df = pd.read_sql(season_sort, con=conn)
 
