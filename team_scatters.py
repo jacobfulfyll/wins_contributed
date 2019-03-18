@@ -52,8 +52,8 @@ for team in teams:
         ax.text(x, y, name+'('+str(round(z, 2))+')', fontsize=6)
     ax.set_xlabel('Average Per Win')
     ax.set_ylabel('Total Wins')
-    plt.savefig(filepath)
     plt.title(team_name)
+    plt.savefig(filepath)
     plt.show()
 
 conn.close()
