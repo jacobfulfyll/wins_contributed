@@ -1,0 +1,58 @@
+from nba_api.stats.endpoints._base import Endpoint
+from nba_api.stats.library.http import NBAStatsHTTP
+from nba_api.stats.library.parameters import EndPeriod, StartPeriod
+
+
+class PlayByPlayV2(Endpoint):
+    endpoint = 'playbyplayv2'
+    expected_data = {'AvailableVideo': ['VIDEO_AVAILABLE_FLAG'], 'PlayByPlay': ['GAME_ID', 'EVENTNUM', 'EVENTMSGTYPE', 'EVENTMSGACTIONTYPE', 'PERIOD', 'WCTIMESTRING', 'PCTIMESTRING', 'HOMEDESCRIPTION', 'NEUTRALDESCRIPTION', 'VISITORDESCRIPTION', 'SCORE', 'SCOREMARGIN', 'PERSON1TYPE', 'PLAYER1_ID', 'PLAYER1_NAME', 'PLAYER1_TEAM_ID', 'PLAYER1_TEAM_CITY', 'PLAYER1_TEAM_NICKNAME', 'PLAYER1_TEAM_ABBREVIATION', 'PERSON2TYPE', 'PLAYER2_ID', 'PLAYER2_NAME', 'PLAYER2_TEAM_ID', 'PLAYER2_TEAM_CITY', 'PLAYER2_TEAM_NICKNAME', 'PLAYER2_TEAM_ABBREVIATION', 'PERSON3TYPE', 'PLAYER3_ID', 'PLAYER3_NAME', 'PLAYER3_TEAM_ID', 'PLAYER3_TEAM_CITY', 'PLAYER3_TEAM_NICKNAME', 'PLAYER3_TEAM_ABBREVIATION']}
+
+    def __init__(self,
+                 game_id,
+                 end_period=EndPeriod.default,
+                 start_period=StartPeriod.default):
+        self.nba_response = NBAStatsHTTP().send_api_request(
+            endpoint=self.endpoint,
+            parameters={
+                'GameID': game_id,
+                'EndPeriod': end_period,
+                'StartPeriod': start_period
+            },
+        )
+        data_sets = self.nba_response.get_data_sets()
+        self.data_sets = [Endpoint.DataSet(data=data_set) for data_set_name, data_set in data_sets.items()]
+        self.available_video = Endpoint.DataSet(data=data_sets['AvailableVideo'])
+        self.play_by_play = Endpoint.DataSet(data=data_sets['PlayByPlay'])
+
+
+class PlayByPlay(Endpoint):
+    endpoint = 'playbyplay'
+    expected_data = {'AvailableVideo': ['VIDEO_AVAILABLE_FLAG'], 'PlayByPlay': ['GAME_ID', 'EVENTNUM', 'EVENTMSGTYPE', 'EVENTMSGACTIONTYPE', 'PERIOD', 'WCTIMESTRING', 'PCTIMESTRING', 'HOMEDESCRIPTION', 'NEUTRALDESCRIPTION', 'VISITORDESCRIPTION', 'SCORE', 'SCOREMARGIN']}
+
+    def __init__(self,
+                 game_id,
+                 end_period=EndPeriod.default,
+                 start_period=StartPeriod.default):
+        self.nba_response = NBAStatsHTTP().send_api_request(
+            endpoint=self.endpoint,
+            parameters={
+                'GameID': game_id,
+                'EndPeriod': end_period,
+                'StartPeriod': start_period
+            }
+        )
+        data_sets = self.nba_response.get_data_sets()
+        self.data_sets = [Endpoint.DataSet(data=data_set) for data_set_name, data_set in data_sets.items()]
+        self.available_video = Endpoint.DataSet(data=data_sets['AvailableVideo'])
+        self.play_by_play = Endpoint.DataSet(data=data_sets['PlayByPlay'])
+
+'''
+Combining the Two Types of PlaybyPlays
+
+test1 = PlayByPlayV2(game_id="0021800001")
+test2 = PlayByPlay(game_id="0021800001")
+test2_df = test2.play_by_play.get_data_frame()
+test1_df = test1.play_by_play.get_data_frame()
+test3_df = pd.concat([test1_df,test2_df], axis=1)
+test3_df = test3_df.loc[:,~test3_df.columns.duplicated()]
+'''
