@@ -43,41 +43,22 @@ season_sort = """SELECT player_name,
                         SUM( ROUND( wins_contr::numeric, 3) ) WINS
                                 FROM(
                                     SELECT *
-                                    FROM jacob_wins_2013_minutes
-
-                                    UNION ALL
-                                    SELECT *
-                                    FROM jacob_wins_2014_minutes
-
-                                    UNION ALL
-
-                                    SELECT *
-                                    FROM jacob_wins_2015_minutes
-
-                                    UNION ALL
-
-                                    SELECT *
-                                    FROM jacob_wins_2016_minutes 
+                                    FROM jacob_wins_2017_final
                                     
                                     UNION ALL
 
                                     SELECT *
-                                    FROM jacob_wins_2017_minutes
+                                    FROM jacob_wins_2018_z
                                     
                                     UNION ALL
 
                                     SELECT *
-                                    FROM jacob_wins_2018_fix
-                                    
-                                    UNION ALL
-
-                                    SELECT *
-                                    FROM jacob_wins_2019_minutes   ) t
+                                    FROM jacob_wins_2019_z   ) t
                     GROUP BY t.player_id, t.player_name
                     ORDER BY WINS DESC;
                     """
 
-fix_table = """ CREATE TABLE jacob_wins_2018_fix(
+fix_table = """ CREATE TABLE jacob_wins_2018_z(
  id               SERIAL,
  game_id          character varying(50)             not null,
  team_id          bigint                            not null, 
@@ -102,8 +83,8 @@ fix_table = """ CREATE TABLE jacob_wins_2018_fix(
 
 
 
-INSERT INTO jacob_wins_2018_fix (game_id, team_id, opponent_id, player_id, player_name, points_score, assists_score, orebs_score, drebs_score, to_score, stls_score, blocks_score, ft_score, dfg_score, sast_score, ft_ast_score, missed_fg_score, def_fouls_score, jacob_value, wins_contr)
-SELECT * FROM jacob_wins_2018_minutes;
+INSERT INTO jacob_wins_2018_z (game_id, team_id, opponent_id, player_id, player_name, points_score, assists_score, orebs_score, drebs_score, to_score, stls_score, blocks_score, ft_score, dfg_score, sast_score, ft_ast_score, missed_fg_score, def_fouls_score, jacob_value, wins_contr)
+SELECT * FROM jacob_wins_2018_final;
 FROM initial_table
                     id SERIAL PRIMARY KEY
              
@@ -122,25 +103,21 @@ GROUP BY player_name
 ORDER BY Wins DESC;
 '''
 
-# ALTER TABLE jacob_wins_2018_minutes
-# ALTER COLUMN orebs_score TYPE FLOAT
-# USING orebs_score::double precision;
+ALTER TABLE jacob_wins_2018_final
+ALTER COLUMN assists_score TYPE FLOAT
+USING assists_score::double precision;
 
-# ALTER TABLE jacob_wins_2018_minutes
-# ALTER COLUMN drebs_score TYPE FLOAT
-# USING drebs_score::double precision;
+ALTER TABLE jacob_wins_2018_final
+ALTER COLUMN stls_score TYPE FLOAT
+USING stls_score::double precision;
 
-# ALTER TABLE jacob_wins_2018_minutes
-# ALTER COLUMN stls_score TYPE FLOAT
-# USING stls_score::double precision;
+ALTER TABLE jacob_wins_2018_final
+ALTER COLUMN blocks_score TYPE FLOAT
+USING blocks_score::double precision;
 
-# ALTER TABLE jacob_wins_2018_minutes
-# ALTER COLUMN blocks_score TYPE FLOAT
-# USING blocks_score::double precision;
-
-# ALTER TABLE jacob_wins_2018_minutes
-# ALTER COLUMN ft_score TYPE FLOAT
-# USING ft_score::double precision;
+ALTER TABLE jacob_wins_2018_final
+ALTER COLUMN ft_ast_score TYPE FLOAT
+USING ft_ast_score::double precision;
 
 '''                    UNION ALL
                     SELECT player_name,
