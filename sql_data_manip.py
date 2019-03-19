@@ -26,6 +26,7 @@ season_sort = """SELECT player_name,
                                    """
 
     multi_season_sort = """SELECT player_name,
+                        SUM( ROUND( wins_contr::numeric, 3) ) WINS
                         SUM( ROUND( points_score::numeric, 3 ) ) PTS_SCORE,
                         SUM( ROUND( missed_fg_score::numeric, 3) ) MISS_SCORE,
                         SUM( ROUND( ft_score::numeric, 3) ) FT_SCORE,
@@ -39,8 +40,7 @@ season_sort = """SELECT player_name,
                         SUM( ROUND( blocks_score::numeric, 3) ) BLK_SCORE,
                         SUM( ROUND( dfg_score::numeric, 3) ) DFG_SCORE,
                         SUM( ROUND( def_fouls_score::numeric, 3) ) PF_SCORE,
-                        SUM( ROUND( jacob_value::numeric, 3) ) TOTAL_SCORE,
-                        SUM( ROUND( wins_contr::numeric, 3) ) WINS
+                        SUM( ROUND( jacob_value::numeric, 3) ) TOTAL_SCORE
                                 FROM(
                                     SELECT *
                                     FROM jacob_wins_2017_final
@@ -53,7 +53,7 @@ season_sort = """SELECT player_name,
                                     UNION ALL
 
                                     SELECT *
-                                    FROM jacob_wins_2019_z   ) t
+                                    FROM jacob_wins_2019_z) t
                     GROUP BY t.player_id, t.player_name
                     ORDER BY WINS DESC;
                     """
