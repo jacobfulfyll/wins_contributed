@@ -7,8 +7,15 @@ Assissted_FT_After_OREB = .4
 FT_After_OREB = .5
 
 # Run this function for every player who has a FT within a given game
-def score_ft(player_events_df, game_df, current_player, home_away, team_id, offense_possession_value):
+def score_ft(player_events_df, game_df, current_player, win_loss, team_id, offense_possession_value):
     current_player_ft_score = 0
+
+    if win_loss == 1:
+        team1 = 'WINNINGTEAM'
+        team2 = 'LOSINGTEAM'
+    else:
+        team1 = 'LOSINGTEAM'
+        team2 = 'WINNINGTEAM'
 
     # Limit player_events_df to only FT related rows. EVENTMSGTYPE 3 = FT Attempt
     player_events_df = player_events_df[(player_events_df['EVENTMSGTYPE'] == 3) & (player_events_df['PLAYER1_ID'] == current_player)]
@@ -27,40 +34,40 @@ def score_ft(player_events_df, game_df, current_player, home_away, team_id, offe
         points_on_board = 0
         o_board_index = 2 # Value starts at 2, because the row above the free throw is always a foul
         oreb_sequence = 0
-        if 'technical' in str(game_df.loc[idx]['WINNINGTEAM']).lower() and 'pts' in str(game_df.loc[idx]['WINNINGTEAM']).lower():
+        if 'technical' in str(game_df.loc[idx][team1]).lower() and 'pts' in str(game_df.loc[idx][team1]).lower():
             current_player_ft_score += 1
             continue
         if idx - 2 <= 0: # If index is out of range, there are no assists
             ast = 0
-        elif 'ast' in str(game_df.loc[idx - 2]['WINNINGTEAM']).lower(): # Check for an assist on the free throw
+        elif 'ast' in str(game_df.loc[idx - 2][team1]).lower(): # Check for an assist on the free throw
             ast = 1
         else:
             ast = 0 
 
-        if 'of 1' in str(game_df.loc[idx]['WINNINGTEAM']).lower(): # Number of free throws
+        if 'of 1' in str(game_df.loc[idx][team1]).lower(): # Number of free throws
             free_throws = 1
-        elif 'of 2' in str(game_df.loc[idx]['WINNINGTEAM']).lower(): # Number of free throws
+        elif 'of 2' in str(game_df.loc[idx][team1]).lower(): # Number of free throws
             free_throws = 2
-        elif 'of 3' in str(game_df.loc[idx]['WINNINGTEAM']).lower(): # Number of free throws
+        elif 'of 3' in str(game_df.loc[idx][team1]).lower(): # Number of free throws
             free_throws = 3
         else:
-            print(str(game_df.loc[idx]['WINNINGTEAM']))
+            print(str(game_df.loc[idx][team1]))
             print('FREE THROW: ERROR: UNKNOWN NUMBER OF FREE THROWS', idx)
             free_throws = 0
         
         # Determine how many free throws were made
         while free_throws > 0: 
             if (idx + counter >= len(game_df.index) - 1 
-                and 'miss' not in str(game_df.loc[idx + counter]['WINNINGTEAM']).lower()): # If index out of range and free throw made, break loop and credit FT
+                and 'miss' not in str(game_df.loc[idx + counter][team1]).lower()): # If index out of range and free throw made, break loop and credit FT
                 points_on_board += 1
                 free_throws -= 1
                 break
             elif (idx + counter >= len(game_df.index) - 1  
-                  and 'miss' in str(game_df.loc[idx + counter]['WINNINGTEAM']).lower()): # If free throw missed, no credit to FT, move to next FT
+                  and 'miss' in str(game_df.loc[idx + counter][team1]).lower()): # If free throw missed, no credit to FT, move to next FT
                 points_on_board -= 1
                 free_throws -= 1
                 break
-            elif 'miss' not in str(game_df.loc[idx + counter]['WINNINGTEAM']).lower(): # If free throw made, credit FT, move to next FT
+            elif 'miss' not in str(game_df.loc[idx + counter][team1]).lower(): # If free throw made, credit FT, move to next FT
                 points_on_board += 1
                 free_throws -= 1
                 counter += 1
@@ -75,26 +82,26 @@ def score_ft(player_events_df, game_df, current_player, home_away, team_id, offe
                 or (idx - o_board_index) <= 0
                 or game_df.loc[idx - o_board_index]['EVENTMSGTYPE'] == 5 
                 or (game_df.loc[idx - o_board_index]['EVENTMSGTYPE'] == 1 
-                and game_df.loc[idx - o_board_index]['WINNINGTEAM'] == None)): #If there is a turnover or a made shot by the other team, break the loop
+                and game_df.loc[idx - o_board_index][team1] == None)): #If there is a turnover or a made shot by the other team, break the loop
                 break
 
             elif (idx <= 0
                  or (idx - o_board_index) <= 0
-                 or ('miss' in str(game_df.loc[idx - o_board_index - 1]['LOSINGTEAM']).lower()
+                 or ('miss' in str(game_df.loc[idx - o_board_index - 1][team2]).lower()
                  and game_df.loc[idx - o_board_index]['EVENTMSGTYPE'] == 4)): # If there is a defensive rebound by the winning team, break the loop
                 break
 
             elif (game_df.loc[idx - o_board_index]['EVENTMSGTYPE'] == 3
-                 and game_df.loc[idx - o_board_index]['WINNINGTEAM'] == None): # If the losing team takes a free throw break the loop
+                 and game_df.loc[idx - o_board_index][team1] == None): # If the losing team takes a free throw break the loop
                 break
 
-            elif ('miss' in str(game_df.loc[idx - o_board_index - 1]['WINNINGTEAM']).lower()
+            elif ('miss' in str(game_df.loc[idx - o_board_index - 1][team1]).lower()
                  and game_df.loc[idx - o_board_index]['EVENTMSGTYPE'] == 4): # If there is a miss by the winning team and a subsequent rebound, add to the oreb sequence and continue the loop
                 oreb_sequence += 1
                 o_board_index += 1
 
             elif (game_df.loc[idx - o_board_index - 1]['EVENTMSGTYPE'] == 3 
-                 and 'miss' in str(game_df.loc[idx - o_board_index - 1]['WINNINGTEAM']).lower()
+                 and 'miss' in str(game_df.loc[idx - o_board_index - 1][team1]).lower()
                  and game_df.loc[idx - o_board_index]['EVENTMSGTYPE'] == 4): # If your team missed a free throw and grabbed the rebound add to the oreb sequence and continue the loop
                 oreb_sequence += 1
                 o_board_index += 1

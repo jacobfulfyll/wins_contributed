@@ -19,9 +19,10 @@ season_sort = """SELECT player_name,
                         SUM( ROUND( def_fouls_score::numeric, 3) ) PF_SCORE,
                         SUM( ROUND( jacob_value::numeric, 3) ) TOTAL_SCORE,
                         SUM( ROUND( wins_contr::numeric, 3) ) WINS
-                 FROM jacob_wins_2018_final
+                 FROM reg_season_2018_19
+                 WHERE win_loss = 1
                  GROUP BY player_id, player_name
-                 ORDER BY OREBS_SCORE DESC;
+                 ORDER BY WINS DESC;
                  
                                    """
 

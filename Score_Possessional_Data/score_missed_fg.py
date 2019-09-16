@@ -1,17 +1,24 @@
 import pandas as pd
 
 # Run this function for every player who missed a field goal within a given game
-def score_missed_fg (player_events_df, game_df, current_player, offense_possession_value, winning_team):
+def score_missed_fg (player_events_df, game_df, current_player, offense_possession_value, winning_team, win_loss):
     current_player_missed_fg_score = 0
+
+    if win_loss == 1:
+        team1 = 'WINNINGTEAM'
+        team2 = 'LOSINGTEAM'
+    else:
+        team1 = 'LOSINGTEAM'
+        team2 = 'WINNINGTEAM'
 
     # Limit player_events_df to only missed_fg related rows. EVENTMSGTYPE 2 = Missed FG
     player_events_df = player_events_df[(player_events_df['EVENTMSGTYPE'] == 2) & (player_events_df['PLAYER1_ID'] == current_player)]
 
     for idx, event in player_events_df['EVENTMSGTYPE'].iteritems(): #For every missed shot for current player
         if ((game_df.loc[idx + 1]['EVENTMSGTYPE'] == 4
-            and game_df.loc[idx + 1]['WINNINGTEAM'] == None)
+            and game_df.loc[idx + 1][team1] == None)
             or (game_df.loc[idx + 1]['EVENTMSGTYPE'] == 6 
-            and game_df.loc[idx + 1]['LOSINGTEAM'] == None) 
+            and game_df.loc[idx + 1][team2] == None) 
             or idx + 1 > len(game_df.index) - 1): # If there was a change in possession after the shot, dock points from shooter
             current_player_missed_fg_score += -offense_possession_value
             continue

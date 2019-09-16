@@ -1,11 +1,12 @@
 #Only need to run one time to set up all your tables in your database
 import psycopg2 as pg2
 
-conn = pg2.connect(dbname= "jacob_wins", host = "localhost")
+conn = pg2.connect(dbname= "wins_contr", host = "localhost")
 cur = conn.cursor()
 
-tables = """CREATE TABLE jacob_wins_2017_final (id SERIAL PRIMARY KEY,
+tables = """CREATE TABLE playoffs_2016_17 (id SERIAL PRIMARY KEY,
                                         game_id VARCHAR(50) NOT NULL,
+                                        win_loss INT NOT NULL,
                                         team_id BIGINT NOT NULL,
                                         opponent_id BIGINT NOT NULL,
                                         player_id BIGINT NOT NULL,
@@ -29,8 +30,8 @@ tables = """CREATE TABLE jacob_wins_2017_final (id SERIAL PRIMARY KEY,
              
 cur.execute(tables)
 conn.commit()
-'''
-play_by_play="""CREATE TABLE play_by_play_2013 (id SERIAL PRIMARY KEY,
+
+play_by_play="""CREATE TABLE playoff_events_2016_17 (id SERIAL PRIMARY KEY,
                                 game_id VARCHAR(50) NOT NULL, 
                                 eventnum INTEGER NULL,
                                 eventmsgtype INTEGER NULL,
@@ -46,7 +47,7 @@ play_by_play="""CREATE TABLE play_by_play_2013 (id SERIAL PRIMARY KEY,
 cur.execute(play_by_play)
 conn.commit()
 
-general="""CREATE TABLE general_2013 (id SERIAL PRIMARY KEY,
+general="""CREATE TABLE playoff_totals_2016_17 (id SERIAL PRIMARY KEY,
                                 PLAYER_ID BIGINT NOT NULL,
                                 PLAYER_NAME VARCHAR(50) NOT NULL, 
                                 MIN VARCHAR(7) NULL,
@@ -72,9 +73,9 @@ general="""CREATE TABLE general_2013 (id SERIAL PRIMARY KEY,
                                 offense_factor2 REAL NULL,
                                 FG2M INTEGER NULL,
                                 DFG INTEGER NULL,
-                                SEC_FACT INTEGER NULL);"""
+                                SEC_FACT REAL NULL);"""
                               
 cur.execute(general)
 conn.commit()
-'''
+
 conn.close()

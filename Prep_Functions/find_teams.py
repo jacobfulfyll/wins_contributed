@@ -2,7 +2,7 @@ import pandas as pd
 from classes.BoxScore import BoxScoreTraditionalV2
 from classes.teamgamelog import TeamGameLog
 
-def team_info(game_id, season):
+def team_info(game_id, season, season_type):
     # Create Box Score Traditional Object
     traditional = BoxScoreTraditionalV2(game_id=game_id)
     
@@ -11,11 +11,12 @@ def team_info(game_id, season):
 
     # Determine The Two Teams That Played In The Game #
     teams = teams_df['TEAM_ID'].unique()
+    print(teams)
     
     ### Figure Out Which Team Won The Game ###
 
         # Create a game log object for the first team in the teams list
-    game_log = TeamGameLog(team_id=teams[0], season_all=season)
+    game_log = TeamGameLog(team_id=teams[0], season_all=season, season_type_all_star=season_type)
     game_log_df = game_log.team_game_log.get_data_frame()
     
         # Filter that teams game log to be only the specific game we are evaluating

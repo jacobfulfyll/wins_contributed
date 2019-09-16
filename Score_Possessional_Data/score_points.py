@@ -7,9 +7,16 @@ FG_After_OREB = .5
 
 
 # Run this function for every player who made a field goal
-def score_points(player_events_df, game_df, current_player, home_away, team_id, offense_possession_value):
+def score_points(player_events_df, game_df, current_player, win_loss, team_id, offense_possession_value):
     current_player_points_score = 0
     
+    if win_loss == 1:
+        team1 = 'WINNINGTEAM'
+        team2 = 'LOSINGTEAM'
+    else:
+        team1 = 'LOSINGTEAM'
+        team2 = 'WINNINGTEAM'
+
     # Limit player_events_df to only made_fg related rows. EVENTMSGTYPE 1 = Made Shot
     player_events_df = player_events_df[(player_events_df['EVENTMSGTYPE'] == 1) & (player_events_df['PLAYER1_ID'] == current_player)]
 
@@ -27,14 +34,14 @@ def score_points(player_events_df, game_df, current_player, home_away, team_id, 
         or (idx - o_board_index) == 0  # Will throw error if you are looking for an index < 0
         or (game_df.loc[idx - o_board_index]['EVENTMSGTYPE'] == 3 or game_df.loc[idx - o_board_index]['EVENTMSGTYPE'] == 1 or game_df.loc[idx - o_board_index]['EVENTMSGTYPE'] == 5)): # If the event above is a free throw, another made shot, or a turnover there was no o-reb on this possession
                 
-                if 'ast' not in str(player_events_df.loc[idx]['WINNINGTEAM']).lower(): # If the shot was unassisted
-                    if '3pt' not in str(player_events_df.loc[idx]['WINNINGTEAM']).lower(): # If the shot was not a 3 pointer
+                if 'ast' not in str(player_events_df.loc[idx][team1]).lower(): # If the shot was unassisted
+                    if '3pt' not in str(player_events_df.loc[idx][team1]).lower(): # If the shot was not a 3 pointer
                         current_player_points_score += 2 - offense_possession_value
                     else:
                         current_player_points_score += 3 - offense_possession_value
                         
                 else:
-                    if '3pt' not in str(player_events_df.loc[idx]['WINNINGTEAM']).lower(): #If the shot was assisted 2 pointer
+                    if '3pt' not in str(player_events_df.loc[idx][team1]).lower(): #If the shot was assisted 2 pointer
                         current_player_points_score += (2 - offense_possession_value) * Assisted_FG
                     else:
                         current_player_points_score += (3 - offense_possession_value) * Assisted_FG
@@ -50,47 +57,47 @@ def score_points(player_events_df, game_df, current_player, home_away, team_id, 
                 else: 
                     o_board_index += 1
             if game_df.loc[idx - o_board_index]['EVENTMSGTYPE'] == 5: # If there was a turnover, there were no offensive rebounds on the possession
-                if 'ast' not in str(player_events_df.loc[idx]['WINNINGTEAM']).lower(): # If the shot was not assisted
-                    if '3pt' not in str(player_events_df.loc[idx]['WINNINGTEAM']).lower(): # If the shot was not a 3 pointer
+                if 'ast' not in str(player_events_df.loc[idx][team1]).lower(): # If the shot was not assisted
+                    if '3pt' not in str(player_events_df.loc[idx][team1]).lower(): # If the shot was not a 3 pointer
                         current_player_points_score += 2 - offense_possession_value
                     else:
                         current_player_points_score += 3 - offense_possession_value
                         
                 else:
-                    if '3pt' not in str(player_events_df.loc[idx]['WINNINGTEAM']).lower(): #If the shot was assisted 2 pointer
+                    if '3pt' not in str(player_events_df.loc[idx][team1]).lower(): #If the shot was assisted 2 pointer
                         current_player_points_score += (2 - offense_possession_value) * Assisted_FG
                     else:
                         current_player_points_score += (3 - offense_possession_value) * Assisted_FG
 
-            if (game_df.loc[idx - o_board_index]['WINNINGTEAM'] == None 
-            or 'miss' in str(game_df.loc[idx - o_board_index]['LOSINGTEAM']).lower()): # If the row with the last missed shot was from the losing team, there were no offensive rebounds
+            if (game_df.loc[idx - o_board_index][team1] == None 
+            or 'miss' in str(game_df.loc[idx - o_board_index][team2]).lower()): # If the row with the last missed shot was from the losing team, there were no offensive rebounds
                     
-                    if 'ast' not in str(player_events_df.loc[idx]['WINNINGTEAM']).lower():
-                        if '3pt' not in str(player_events_df.loc[idx]['WINNINGTEAM']).lower(): 
+                    if 'ast' not in str(player_events_df.loc[idx][team1]).lower():
+                        if '3pt' not in str(player_events_df.loc[idx][team1]).lower(): 
                             current_player_points_score += 2 - offense_possession_value
                         else:
                             current_player_points_score += 3 - offense_possession_value
                     else:
-                        if '3pt' not in str(player_events_df.loc[idx]['WINNINGTEAM']).lower():
+                        if '3pt' not in str(player_events_df.loc[idx][team1]).lower():
                             
                             current_player_points_score += (2 - offense_possession_value) * Assisted_FG
                         else:
                             current_player_points_score += (3 - offense_possession_value) * Assisted_FG
             
-            elif ('miss' in str(game_df.loc[idx - o_board_index]['WINNINGTEAM']).lower() 
+            elif ('miss' in str(game_df.loc[idx - o_board_index][team1]).lower() 
             and game_df.loc[idx - o_board_index + 1]['EVENTMSGTYPE'] == 4 
-            and 'rebound' in str(game_df.loc[idx - o_board_index + 1]['WINNINGTEAM']).lower()): # If the last shot missed was from the winning team and was followed by a rebound, there was an offensive rebound in the possession
+            and 'rebound' in str(game_df.loc[idx - o_board_index + 1][team1]).lower()): # If the last shot missed was from the winning team and was followed by a rebound, there was an offensive rebound in the possession
                     
-                    if 'ast' not in str(player_events_df.loc[idx]['WINNINGTEAM']).lower():
+                    if 'ast' not in str(player_events_df.loc[idx][team1]).lower():
                         
-                        if '3pt' not in str(player_events_df.loc[idx]['WINNINGTEAM']).lower():
+                        if '3pt' not in str(player_events_df.loc[idx][team1]).lower():
                             current_player_points_score += (2 - offense_possession_value) * FG_After_OREB
                             
                         else:
                             current_player_points_score += (3 - offense_possession_value) * FG_After_OREB
                             
                     else:
-                        if '3pt' not in str(player_events_df.loc[idx]['WINNINGTEAM']).lower():
+                        if '3pt' not in str(player_events_df.loc[idx][team1]).lower():
                             current_player_points_score += (2 - offense_possession_value) * Assisted_FG_After_OREB
                             
                         else:

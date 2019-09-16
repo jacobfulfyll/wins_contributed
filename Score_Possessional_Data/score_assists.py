@@ -6,13 +6,19 @@ Assist = .3 # Assists receive 30% of value created from made shot when no offens
 Assisted_After_OREB = .2 # Assists receive 20% of value created from made shot when after offensive rebound
 
 # Run this function for every player who had an assist within a given game
-def score_assists(player_events_df, game_df, current_player, home_away, team_id, offense_possession_value):
+def score_assists(player_events_df, game_df, current_player, win_loss, team_id, offense_possession_value):
     current_player_assists_score = 0 # Assists score for current player
 
     # Limit player_events_df to only assist related rows. EVENTMSGTYPE 1 = Made Shot
     player_events_df = player_events_df[(player_events_df['EVENTMSGTYPE'] == 1) 
                        & (player_events_df['PLAYER2_ID'] == current_player)]
 
+    if win_loss == 1:
+        team1 = 'WINNINGTEAM'
+        team2 = 'LOSINGTEAM'
+    else:
+        team1 = 'LOSINGTEAM'
+        team2 = 'WINNINGTEAM'
 
     # game_df and player_events_df have the same indexes
     # game_df includes every play from the game 
@@ -28,7 +34,7 @@ def score_assists(player_events_df, game_df, current_player, home_away, team_id,
         or (game_df.loc[idx - o_board_index]['EVENTMSGTYPE'] == 3    # If there was a free throw attempt before an assist and we haven't seen a rebound, there was no offensive rebound within the possession
         or game_df.loc[idx - o_board_index]['EVENTMSGTYPE'] == 1     # If there was a made shot before this assist, there was no offensive rebound on this possession
         or game_df.loc[idx - o_board_index]['EVENTMSGTYPE'] == 5)):  # If there was a turnover before this assist, there was no offensive rebound on this possession
-            if '3pt' not in str(player_events_df.loc[idx]['WINNINGTEAM']).lower():      # If '3pt' is not in the assist event we are looking at, make the points scored on the possession 2 
+            if '3pt' not in str(player_events_df.loc[idx][team1]).lower():      # If '3pt' is not in the assist event we are looking at, make the points scored on the possession 2 
                 current_player_assists_score += (2 - offense_possession_value) * Assist # Add the value created on the possession, assigned to the assister to the current assist score for the player being evaluated
             else:                                                                       # If '3pt' was in the assist event, make points scored on the possession 3
                 current_player_assists_score += (3 - offense_possession_value) * Assist # Add the value created to assisters current assist score
@@ -46,17 +52,17 @@ def score_assists(player_events_df, game_df, current_player, home_away, team_id,
                 else: 
                     o_board_index += 1 # Increasing o_board_index lets you keep moving up the events in game_df
 
-            if (game_df.loc[idx - o_board_index]['WINNINGTEAM'] == None 
-            or 'miss' in str(game_df.loc[idx - o_board_index]['LOSINGTEAM']).lower()): # If the last missed shot was from the losing team, there was no offensive rebound on this possession
-                if '3pt' not in str(player_events_df.loc[idx]['WINNINGTEAM']).lower():
+            if (game_df.loc[idx - o_board_index][team1] == None 
+            or 'miss' in str(game_df.loc[idx - o_board_index][team2]).lower()): # If the last missed shot was from the losing team, there was no offensive rebound on this possession
+                if '3pt' not in str(player_events_df.loc[idx][team1]).lower():
                     current_player_assists_score += (2 - offense_possession_value) * Assist # Add the value created on the possession, assigned to the assister to the current assist score for the player being evaluated
                 else:
                     current_player_assists_score += (3 - offense_possession_value) * Assist # Add the value created on the possession, assigned to the assister to the current assist score for the player being evaluated
             
-            elif ('miss' in str(game_df.loc[idx - o_board_index]['WINNINGTEAM']).lower() 
+            elif ('miss' in str(game_df.loc[idx - o_board_index][team1]).lower() 
             and game_df.loc[idx - o_board_index + 1]['EVENTMSGTYPE'] == 4
-            and 'rebound' in str(game_df.loc[idx - o_board_index + 1]['WINNINGTEAM']).lower()): # If the last missed shot was rebounded by the winning team, there was an offensive rebound on the possession
-                if '3pt' not in str(player_events_df.loc[idx]['WINNINGTEAM']).lower():
+            and 'rebound' in str(game_df.loc[idx - o_board_index + 1][team1]).lower()): # If the last missed shot was rebounded by the winning team, there was an offensive rebound on the possession
+                if '3pt' not in str(player_events_df.loc[idx][team1]).lower():
                     current_player_assists_score += (2 - offense_possession_value) * Assisted_After_OREB # Add the value created on the possession, multiply by the offensive rebound with assit factor rather than the assist factor
                 else:
                     current_player_assists_score += (3 - offense_possession_value) * Assisted_After_OREB  # Add the value created on the possession, multiply by the offensive rebound with assit factor rather than the assist factor 

@@ -1,7 +1,7 @@
 from classes.BoxScore import BoxScoreTraditionalV2
 
 
-def possession_variables(game_id, winning_team, losing_team):
+def possession_variables(game_id, winning_team, losing_team, current_team):
     # Create Box Score Traditional Object
     traditional = BoxScoreTraditionalV2(game_id=game_id)
     
@@ -24,9 +24,17 @@ def possession_variables(game_id, winning_team, losing_team):
     loser_fg_points = (losing_team_df.loc[0]['FGM'] - losing_team_df.loc[0]['FG3M']) * 2 + losing_team_df.loc[0]['FG3M'] * 3
     loser_fg_att = losing_team_df.loc[0]['FGA'] 
     
-    # Possession Value Calculations
-    effective_ft_pct = winning_team_df.loc[0]['FT_PCT']
-    offense_possession_value = (winner_fg_points + winning_team_df.loc[0]['FTM']) / (winner_fg_att + winning_team_df.loc[0]['TO'] + (winning_team_df.loc[0]['FTA'] / 2)  - 1) # Minus 1 on attempts to subtract the missed shot in question, add in turnovers and free throws because you are effectively preventing another possession
-    defense_possession_value = (loser_fg_points + losing_team_df.loc[0]['FTM']) / (loser_fg_att + losing_team_df.loc[0]['TO'] + (losing_team_df.loc[0]['FTA'] / 2)  - 1) # Minus 1 on attempts to subtract the missed shot in question, add in turnovers and free throws because you are effectively preventing another possession
+    # Winner Possession Value Calculations
+    winner_effective_ft_pct = winning_team_df.loc[0]['FT_PCT']
+    winner_offense_possession_value = (winner_fg_points + winning_team_df.loc[0]['FTM']) / (winner_fg_att + winning_team_df.loc[0]['TO'] + (winning_team_df.loc[0]['FTA'] / 2)  - 1) # Minus 1 on attempts to subtract the missed shot in question, add in turnovers and free throws because you are effectively preventing another possession
+    winner_defense_possession_value = (loser_fg_points + losing_team_df.loc[0]['FTM']) / (loser_fg_att + losing_team_df.loc[0]['TO'] + (losing_team_df.loc[0]['FTA'] / 2)  - 1) # Minus 1 on attempts to subtract the missed shot in question, add in turnovers and free throws because you are effectively preventing another possession
 
-    return offense_possession_value, defense_possession_value, effective_ft_pct
+    # Loser Possession Value Calculations
+    loser_effective_ft_pct = losing_team_df.loc[0]['FT_PCT']
+    loser_offense_possession_value = (loser_fg_points + winning_team_df.loc[0]['FTM']) / (loser_fg_att + losing_team_df.loc[0]['TO'] + (losing_team_df.loc[0]['FTA'] / 2)  - 1) # Minus 1 on attempts to subtract the missed shot in question, add in turnovers and free throws because you are effectively preventing another possession
+    loser_defense_possession_value = (winner_fg_points + losing_team_df.loc[0]['FTM']) / (winner_fg_att + winning_team_df.loc[0]['TO'] + (winning_team_df.loc[0]['FTA'] / 2)  - 1) # Minus 1 on attempts to subtract the missed shot in question, add in turnovers and free throws because you are effectively preventing another possession    
+    
+    if current_team == 1:
+        return winner_offense_possession_value, winner_defense_possession_value, winner_effective_ft_pct
+    else:
+        return loser_offense_possession_value, loser_defense_possession_value, loser_effective_ft_pct 

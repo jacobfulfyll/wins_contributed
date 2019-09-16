@@ -8,20 +8,46 @@ from classes.teamgamelog import TeamGameLog
 import random
 import numpy as np
 
-conn = pg2.connect(dbname= "jacob_wins", host = "localhost")
+conn = pg2.connect(dbname= "wins_contr", host = "localhost")
 cur = conn.cursor()
 # SQL Pull
-season_sort = """SELECT team_id,
-                        player_id,
+season_sort = """SELECT player_id,
                         player_name,
                         SUM(wins_contr) AS TOTAL_WINS,
                         AVG(wins_contr) AS PER_WIN,
                         MAX(wins_contr) AS Max_Game
-                 FROM jacob_wins_2019_final
-                 GROUP BY player_id, player_name, team_id
-                 ORDER BY Max_Game DESC"""
+                        FROM(                            
+                            SELECT *
+                            FROM playoffs_2013_14
+                            
+                            UNION ALL
 
-                                                  
+                            SELECT *
+                            FROM playoffs_2014_15
+                            
+                            UNION ALL
+
+                            SELECT *
+                            FROM playoffs_2015_16
+                            
+                            UNION ALL
+
+                            SELECT *
+                            FROM playoffs_2016_17
+                            
+                            UNION ALL
+
+                            SELECT *
+                            FROM playoffs_2017_18
+                            
+                            UNION ALL
+
+                            SELECT *
+                            FROM playoffs_2018_19) t
+                 where win_loss = 0
+                 GROUP BY t.player_id, t.player_name
+                 ORDER BY Max_Game DESC"""
+     
 
 season_df = pd.read_sql(season_sort, con=conn)
 print(season_df)
@@ -43,11 +69,11 @@ for player in rand_players:
     x_adj = random.uniform(-.001, .001)
     y_adj = random.uniform(-.001, .001)
     p1.text(x+x_adj, y+y_adj, name + ' ('+str(round(z, 2))+')', horizontalalignment='left', size=6, color='black')
-plt.xlabel('Average Per Win')
-plt.ylabel('Total Wins')
+plt.xlabel('Average Contributed')
+plt.ylabel('Total Contributed')
 plt.legend(loc='upper left')
-plt.title("2018-19 Season")
-filepath = 'Graphs/Season_Scatters/2018-19'
+plt.title("2013-19 Playoffs (Losses)")
+filepath = '/Users/jacobpress/Projects/personal_website/static/images/wins_contr/all_time_scatters/all_time_wc_playoffs_losses.png'
 plt.savefig(filepath)
 plt.show()
 
@@ -56,3 +82,61 @@ plt.show()
 # FROM IN SQL STATEMENT : CHANGE YEAR : LINE 20
 # FILE PATH LOCATION : CHANGE YEAR : LINE 50
 # GRAPH TITLE : CHANGE YEAR : LINE 49
+'''
+                            SELECT *
+                            FROM reg_season_2013_14
+                            
+                            UNION ALL
+
+                            SELECT *
+                            FROM reg_season_2014_15
+                            
+                            UNION ALL
+
+                            SELECT *
+                            FROM reg_season_2015_16
+                            
+                            UNION ALL
+
+                            SELECT *
+                            FROM reg_season_2016_17
+                            
+                            UNION ALL
+
+                            SELECT *
+                            FROM reg_season_2017_18
+                            
+                            UNION ALL
+
+                            SELECT *
+                            FROM reg_season_2018_19
+                            
+                            UNION ALL
+
+                            SELECT *
+                            FROM playoffs_2013_14
+                            
+                            UNION ALL
+
+                            SELECT *
+                            FROM playoffs_2014_15
+                            
+                            UNION ALL
+
+                            SELECT *
+                            FROM playoffs_2015_16
+                            
+                            UNION ALL
+
+                            SELECT *
+                            FROM playoffs_2016_17
+                            
+                            UNION ALL
+
+                            SELECT *
+                            FROM playoffs_2017_18
+                            
+                            UNION ALL
+
+                            SELECT *
+                            FROM playoffs_2018_19'''

@@ -3,7 +3,7 @@ import psycopg2 as pg2
 from classes.PlaybyPlay import PlayByPlayV2
 
 
-def game_df_func(game_id, home_away, season_end_year=None):
+def game_df_func(game_id, home_away, season_type, season_end_year=None):
     # Create play_by_play object for current game
     play_by_play = PlayByPlayV2(game_id=game_id)
 
@@ -25,17 +25,22 @@ def game_df_func(game_id, home_away, season_end_year=None):
     game_df = game_df.reset_index().drop(columns='index')
     
     # Upload to SQL
-
+    
     if season_end_year ==  None:
         next
+    
     else:
-        sql_table = 'play_by_play_' + str(season_end_year)
+        if season_type == 'Playoffs':
+            sql_table = 'playoff_events' + '_' + str(season_end_year-1) + '_' + str(season_end_year)[-2:] 
+        else:
+            sql_table = 'events' + '_' + str(season_end_year-1) + '_' + str(season_end_year)[-2:]
+        
         columns = [x.lower() for x in game_df.columns]
         store_df = game_df.copy()
         store_df.columns = columns
         conn = pg2.connect(dbname = 'postgres', host = "localhost")
         conn.autocommit = True
-        engine = create_engine('postgresql+psycopg2://owner:Fulfyll@localhost/jacob_wins')
+        engine = create_engine('postgresql+psycopg2://jacobpress:bocaj29@localhost/wins_contr')
         store_df.to_sql(sql_table, con = engine, if_exists= "append", index=False)
         conn.close()
 
@@ -44,5 +49,5 @@ def game_df_func(game_id, home_away, season_end_year=None):
     else:
         game_df = game_df.rename({"HOMEDESCRIPTION": "LOSINGTEAM", "VISITORDESCRIPTION": "WINNINGTEAM"}, axis=1)
     
-    
+
     return game_df
