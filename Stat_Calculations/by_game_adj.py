@@ -48,7 +48,7 @@ def depth_chart_position_by_game_splits():
     conn = pg2.connect(dbname = 'postgres', host = "localhost")
     conn.autocommit = True
     engine = create_engine('postgresql+psycopg2://jacobpress:bocaj29@localhost/wins_contr')
-    yearly_df.to_sql(sql_table, con = engine, if_exists= "append")
+    yearly_df.to_sql(sql_table, con = engine, if_exists= "replace")
     conn.close()
 
 depth_chart_position_by_game_splits()

@@ -69,10 +69,14 @@ def games_played():
 
 
 def all_time_wc(wins_contributed_df, reg_seasons_df, playoffs_df):
+    
     all_time_df = wins_contributed_df
+    all_time_df_max = all_time_df[['player_id', 'player_name', 'wins_contr', 'season_end']].groupby(['player_id','player_name','season_end'], as_index=False)
     all_time_df = all_time_df[['player_id', 'player_name', 'wins_contr']].groupby(['player_id','player_name'], as_index=False)
+    
 
-    all_time_df_max = all_time_df.max()
+    all_time_df_max = all_time_df_max.sum()
+    all_time_df_max = all_time_df_max.groupby(['player_id', 'player_name']).max()
     all_time_df_max = all_time_df_max.rename(columns={"wins_contr": "max_season_wc"})
     all_time_df_sum = all_time_df.aggregate(np.sum)
 
@@ -97,11 +101,14 @@ def all_time_wc(wins_contributed_df, reg_seasons_df, playoffs_df):
 def all_time_playoff_wc(wins_contributed_df, reg_seasons_df, playoffs_df):
     all_time_df = wins_contributed_df
     all_time_df = all_time_df[all_time_df['season_type'] == 'Playoffs']
+    all_time_df_max = all_time_df[['player_id', 'player_name', 'wins_contr', 'season_end']].groupby(['player_id','player_name','season_end'], as_index=False)
     all_time_df = all_time_df[['player_id', 'player_name', 'wins_contr']].groupby(['player_id','player_name'], as_index=False)
     
-    all_time_df_max = all_time_df.max()
+    all_time_df_max = all_time_df_max.sum()
+    all_time_df_max = all_time_df_max.groupby(['player_id', 'player_name']).max()
     all_time_df_max = all_time_df_max.rename(columns={"wins_contr": "max_season_wc"})
     all_time_df_sum = all_time_df.aggregate(np.sum)
+
     all_time_df = all_time_df_max.merge(all_time_df_sum, on=['player_id', 'player_name'])
 
     all_time_df = all_time_df.sort_values('wins_contr', ascending=False)
@@ -120,11 +127,14 @@ def all_time_playoff_wc(wins_contributed_df, reg_seasons_df, playoffs_df):
 def all_time_reg_season_wc(wins_contributed_df, reg_seasons_df, playoffs_df):
     all_time_df = wins_contributed_df
     all_time_df = all_time_df[all_time_df['season_type'] == 'Regular Season']
+    all_time_df_max = all_time_df[['player_id', 'player_name', 'wins_contr', 'season_end']].groupby(['player_id','player_name','season_end'], as_index=False)
     all_time_df = all_time_df[['player_id', 'player_name', 'wins_contr']].groupby(['player_id','player_name'], as_index=False)
     
-    all_time_df_max = all_time_df.max()
+    all_time_df_max = all_time_df_max.sum()
+    all_time_df_max = all_time_df_max.groupby(['player_id', 'player_name']).max()
     all_time_df_max = all_time_df_max.rename(columns={"wins_contr": "max_season_wc"})
     all_time_df_sum = all_time_df.aggregate(np.sum)
+
     all_time_df = all_time_df_max.merge(all_time_df_sum, on=['player_id', 'player_name'])
 
     all_time_df = all_time_df.sort_values('wins_contr', ascending=False)
@@ -142,11 +152,14 @@ def all_time_reg_season_wc(wins_contributed_df, reg_seasons_df, playoffs_df):
 
 def all_time_wc_il(wins_contributed_in_loss_df, reg_seasons_df, playoffs_df):
     all_time_df = wins_contributed_in_loss_df
+    all_time_df_max = all_time_df[['player_id', 'player_name', 'wins_contr_in_loss', 'season_end']].groupby(['player_id','player_name','season_end'], as_index=False)
     all_time_df = all_time_df[['player_id', 'player_name', 'wins_contr_in_loss']].groupby(['player_id','player_name'], as_index=False)
     
-    all_time_df_max = all_time_df.max()
+    all_time_df_max = all_time_df_max.sum()
+    all_time_df_max = all_time_df_max.groupby(['player_id', 'player_name']).max()
     all_time_df_max = all_time_df_max.rename(columns={"wins_contr_in_loss": "max_season_wc_il"})
     all_time_df_sum = all_time_df.aggregate(np.sum)
+
     all_time_df = all_time_df_max.merge(all_time_df_sum, on=['player_id', 'player_name'])
 
     all_time_df = all_time_df.sort_values('wins_contr_in_loss', ascending=False)
@@ -168,11 +181,14 @@ def all_time_wc_il(wins_contributed_in_loss_df, reg_seasons_df, playoffs_df):
 def all_time_playoff_wc_il(wins_contributed_in_loss_df, reg_seasons_df, playoffs_df):
     all_time_df = wins_contributed_in_loss_df
     all_time_df = all_time_df[all_time_df['season_type'] == 'Playoffs']
+    all_time_df_max = all_time_df[['player_id', 'player_name', 'wins_contr_in_loss', 'season_end']].groupby(['player_id','player_name','season_end'], as_index=False)
     all_time_df = all_time_df[['player_id', 'player_name', 'wins_contr_in_loss']].groupby(['player_id','player_name'], as_index=False)
     
-    all_time_df_max = all_time_df.max()
+    all_time_df_max = all_time_df_max.sum()
+    all_time_df_max = all_time_df_max.groupby(['player_id', 'player_name']).max()
     all_time_df_max = all_time_df_max.rename(columns={"wins_contr_in_loss": "max_season_wc_il"})
     all_time_df_sum = all_time_df.aggregate(np.sum)
+
     all_time_df = all_time_df_max.merge(all_time_df_sum, on=['player_id', 'player_name'])
 
     all_time_df = all_time_df.sort_values('wins_contr_in_loss', ascending=False)
@@ -191,11 +207,14 @@ def all_time_playoff_wc_il(wins_contributed_in_loss_df, reg_seasons_df, playoffs
 def all_time_reg_season_wc_il(wins_contributed_in_loss_df, reg_seasons_df, playoffs_df):
     all_time_df = wins_contributed_in_loss_df
     all_time_df = all_time_df[all_time_df['season_type'] == 'Regular Season']
+    all_time_df_max = all_time_df[['player_id', 'player_name', 'wins_contr_in_loss', 'season_end']].groupby(['player_id','player_name','season_end'], as_index=False)
     all_time_df = all_time_df[['player_id', 'player_name', 'wins_contr_in_loss']].groupby(['player_id','player_name'], as_index=False)
     
-    all_time_df_max = all_time_df.max()
+    all_time_df_max = all_time_df_max.sum()
+    all_time_df_max = all_time_df_max.groupby(['player_id', 'player_name']).max()
     all_time_df_max = all_time_df_max.rename(columns={"wins_contr_in_loss": "max_season_wc_il"})
     all_time_df_sum = all_time_df.aggregate(np.sum)
+
     all_time_df = all_time_df_max.merge(all_time_df_sum, on=['player_id', 'player_name'])
 
     all_time_df = all_time_df.sort_values('wins_contr_in_loss', ascending=False)
@@ -276,4 +295,4 @@ def compile_all_time_stats():
     all_time_df.to_sql(sql_table, con = engine, index=False, if_exists='replace')
     conn.close()
     
-#compile_all_time_stats()
+compile_all_time_stats()

@@ -4,7 +4,7 @@ import pandas as pd
 conn = pg2.connect(dbname= "wins_contr", host = "localhost")
 cur = conn.cursor()
 
-wins = """SELECT player_name, team_id, SUM( ROUND( wins_contr::numeric, 3) ) WINS
+wins = """SELECT player_name, team_id, SUM( ROUND( value_contributed::numeric, 3) ) WINS
                  FROM reg_season_2018_19
                  WHERE win_loss = 1
                  GROUP BY player_name, team_id

@@ -8,7 +8,8 @@ def get_reg_season_2018_19():
     cur = conn.cursor()
 
     df = """SELECT *
-            FROM reg_season_2018_19;"""
+            FROM value_contributed_2018_19
+            WHERE season_type = 'Regular Season';"""
 
     reg_season_2018_19 = pd.read_sql(df, con=conn)
     reg_season_2018_19['season_type'] = 'Regular Season'
@@ -22,10 +23,10 @@ def get_reg_season_2017_18():
     cur = conn.cursor()
 
     df = """SELECT *
-            FROM reg_season_2017_18;"""
+            FROM value_contributed_2017_18
+            WHERE season_type = 'Regular Season';"""
 
     reg_season_2017_18 = pd.read_sql(df, con=conn)
-    reg_season_2017_18['season_type'] = 'Regular Season'
     reg_season_2017_18['season_end'] = 2018
     conn.close()
 
@@ -36,10 +37,10 @@ def get_reg_season_2016_17():
     cur = conn.cursor()
 
     df = """SELECT *
-            FROM reg_season_2016_17;"""
+            FROM value_contributed_2016_17
+            WHERE season_type = 'Regular Season';"""
 
     reg_season_2016_17 = pd.read_sql(df, con=conn)
-    reg_season_2016_17['season_type'] = 'Regular Season'
     reg_season_2016_17['season_end'] = 2017
     conn.close()
 
@@ -50,10 +51,10 @@ def get_reg_season_2015_16():
     cur = conn.cursor()
 
     df = """SELECT *
-            FROM reg_season_2015_16;"""
+            FROM value_contributed_2015_16
+            WHERE season_type = 'Regular Season';"""
 
     reg_season_2015_16 = pd.read_sql(df, con=conn)
-    reg_season_2015_16['season_type'] = 'Regular Season'
     reg_season_2015_16['season_end'] = 2016
     conn.close()
 
@@ -64,10 +65,10 @@ def get_reg_season_2014_15():
     cur = conn.cursor()
 
     df = """SELECT *
-            FROM reg_season_2014_15;"""
+            FROM value_contributed_2014_15
+            WHERE season_type = 'Regular Season';"""
 
     reg_season_2014_15 = pd.read_sql(df, con=conn)
-    reg_season_2014_15['season_type'] = 'Regular Season'
     reg_season_2014_15['season_end'] = 2015
     conn.close()
 
@@ -78,10 +79,10 @@ def get_reg_season_2013_14():
     cur = conn.cursor()
 
     df = """SELECT *
-            FROM reg_season_2013_14;"""
+            FROM value_contributed_2013_14
+            WHERE season_type = 'Regular Season';"""
 
     reg_season_2013_14 = pd.read_sql(df, con=conn)
-    reg_season_2013_14['season_type'] = 'Regular Season'
     reg_season_2013_14['season_end'] = 2014
     conn.close()
 
@@ -92,10 +93,10 @@ def get_playoffs_2018_19():
     cur = conn.cursor()
 
     df = """SELECT *
-            FROM playoffs_2018_19;"""
+            FROM value_contributed_2018_19
+            WHERE season_type = 'Playoffs';"""
 
     playoffs_2018_19 = pd.read_sql(df, con=conn)
-    playoffs_2018_19['season_type'] = 'Playoffs'
     playoffs_2018_19['season_end'] = 2019
     conn.close()
 
@@ -106,10 +107,10 @@ def get_playoffs_2017_18():
     cur = conn.cursor()
 
     df = """SELECT *
-            FROM playoffs_2017_18;"""
+            FROM value_contributed_2017_18
+            WHERE season_type = 'Playoffs';"""
 
     playoffs_2017_18 = pd.read_sql(df, con=conn)
-    playoffs_2017_18['season_type'] = 'Playoffs'
     playoffs_2017_18['season_end'] = 2018
     conn.close()
 
@@ -120,10 +121,10 @@ def get_playoffs_2016_17():
     cur = conn.cursor()
 
     df = """SELECT *
-            FROM playoffs_2016_17;"""
+            FROM value_contributed_2016_17
+            WHERE season_type = 'Playoffs';"""
 
     playoffs_2016_17 = pd.read_sql(df, con=conn)
-    playoffs_2016_17['season_type'] = 'Playoffs'
     playoffs_2016_17['season_end'] = 2017
     conn.close()
 
@@ -134,10 +135,10 @@ def get_playoffs_2015_16():
     cur = conn.cursor()
 
     df = """SELECT *
-            FROM playoffs_2015_16;"""
+            FROM value_contributed_2015_16
+            WHERE season_type = 'Playoffs';"""
 
     playoffs_2015_16 = pd.read_sql(df, con=conn)
-    playoffs_2015_16['season_type'] = 'Playoffs'
     playoffs_2015_16['season_end'] = 2016
     conn.close()
 
@@ -148,10 +149,10 @@ def get_playoffs_2014_15():
     cur = conn.cursor()
 
     df = """SELECT *
-            FROM playoffs_2014_15;"""
+            FROM value_contributed_2014_15
+            WHERE season_type = 'Playoffs';"""
 
     playoffs_2014_15 = pd.read_sql(df, con=conn)
-    playoffs_2014_15['season_type'] = 'Playoffs'
     playoffs_2014_15['season_end'] = 2015
     conn.close()
 
@@ -162,10 +163,10 @@ def get_playoffs_2013_14():
     cur = conn.cursor()
 
     df = """SELECT *
-            FROM playoffs_2013_14;"""
+            FROM value_contributed_2013_14
+            WHERE season_type = 'Playoffs';"""
 
     playoffs_2013_14 = pd.read_sql(df, con=conn)
-    playoffs_2013_14['season_type'] = 'Playoffs'
     playoffs_2013_14['season_end'] = 2014
     conn.close()
 
@@ -191,4 +192,5 @@ def create_stats_df():
                                                 playoffs_2017_18, playoffs_2016_17, playoffs_2015_16, 
                                                 playoffs_2014_15, playoffs_2013_14])
 
+    all_time_df = all_time_df.rename(columns={"value_contributed": "wins_contr", "total_value": "jacob_value"})
     return(all_time_df)

@@ -1,5 +1,5 @@
 import pandas as pd
-from Stat_Calculations.compile_data import create_stats_df
+from compile_data import create_stats_df
 import numpy as np
 import psycopg2 as pg2
 from sqlalchemy import create_engine
@@ -461,6 +461,9 @@ def compile_yearly_stats():
     yearly_stats_df = most_improved(yearly_stats_df)
     #print(yearly_stats_df.sort_values('wc_change', ascending=False))
     
+    # print(yearly_stats_df)
+    # print(yearly_stats_df.columns)
+
     sql_table = 'yearly_stats_by_season'
     conn = pg2.connect(dbname = 'postgres', host = "localhost")
     conn.autocommit = True
@@ -470,18 +473,18 @@ def compile_yearly_stats():
 
 def compile_team_yearly_stats():
     dc_wc_df = depth_chart_position_by_year_splits().append(depth_chart_position_by_year_total())
-    print('dc_wc_df')
-    print(dc_wc_df[dc_wc_df['player_id'] == 202355])
+    # print('dc_wc_df')
+    # print(dc_wc_df[dc_wc_df['player_id'] == 202355])
     dc_wc_il_df = depth_chart_position_by_year_splits(win_loss=0).append(depth_chart_position_by_year_total(win_loss=0))
-    print('dc_wc_il_df')
-    print(dc_wc_il_df[dc_wc_il_df['player_id'] == 202355])
+    # print('dc_wc_il_df')
+    # print(dc_wc_il_df[dc_wc_il_df['player_id'] == 202355])
     dc_tc_df = depth_chart_position_by_year_splits(win_loss='both').append(depth_chart_position_by_year_total(win_loss='both'))   
-    print('dc_tc_df')
-    print(dc_tc_df[dc_tc_df['player_id'] == 202355])
+    # print('dc_tc_df')
+    # print(dc_tc_df[dc_tc_df['player_id'] == 202355])
     team_yearly_stats = dc_wc_df.merge(dc_wc_il_df, on=['season_type', 'season_end', 'team_id', 'player_id', 'player_name'])  
     team_yearly_stats = team_yearly_stats.merge(dc_tc_df, on=['season_type', 'season_end', 'team_id', 'player_id', 'player_name'])
-    print('team_yearly_stats')
-    print(team_yearly_stats[team_yearly_stats['player_id'] == 202355])
+    # print('team_yearly_stats')
+    # print(team_yearly_stats[team_yearly_stats['player_id'] == 202355])
 
 
 
@@ -494,7 +497,8 @@ def compile_team_yearly_stats():
     team_yearly_stats['season_end'] = team_yearly_stats['season_end'].values.astype(int)
     team_yearly_stats['player_id'] = team_yearly_stats['player_id'].values.astype(int)
     
-
+    # print(team_yearly_stats.pivot_table(index='player_id', columns='wins_contr', aggfunc=sum))
+    # print(team_yearly_stats.columns)
     #print(team_yearly_stats.info())
     #print(team_yearly_stats.describe())
 
@@ -505,4 +509,5 @@ def compile_team_yearly_stats():
     team_yearly_stats.to_sql(sql_table, con = engine, if_exists='replace', index=False)
     conn.close()
 
-#compile_team_yearly_stats()
+compile_yearly_stats()
+compile_team_yearly_stats()

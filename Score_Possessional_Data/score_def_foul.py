@@ -4,7 +4,8 @@ block_before_foul = .5
 
 
 def score_def_foul(player_events_df, game_df, current_player, defense_possession_value, win_loss):
-    current_player_def_fouls_score = 0
+    positive_def_fouls = 0
+    negative_def_fouls = 0
     player_events_df = player_events_df[(player_events_df['EVENTMSGTYPE'] == 6) & (player_events_df['PLAYER1_ID'] == current_player)]
     
     if win_loss == 1:
@@ -48,22 +49,22 @@ def score_def_foul(player_events_df, game_df, current_player, defense_possession
             counter = 1
             while True:
                 if idx == 0 or (idx - counter) == 0:          # If index = 0, there were no offensive rebounds before this assist
-                    current_player_def_fouls_score += (def_fouls_score + defense_possession_value)
+                    positive_def_fouls += (def_fouls_score + defense_possession_value)
                     break
                 elif (game_df.loc[idx - counter]['EVENTMSGTYPE'] == 2 
                 and 'block' in str(game_df.loc[idx - counter][team1]).lower()):
-                    current_player_def_fouls_score += (def_fouls_score + defense_possession_value) * block_before_foul
+                    positive_def_fouls += (def_fouls_score + defense_possession_value) * block_before_foul
                     break
                 elif (game_df.loc[idx - counter]['EVENTMSGTYPE'] == 5
                 or game_df.loc[idx - counter]['EVENTMSGTYPE'] == 1
                 or (game_df.loc[idx - counter]['EVENTMSGTYPE'] == 4 and game_df.loc[idx - counter][team2] == None)
                 or (game_df.loc[idx - counter]['EVENTMSGTYPE'] == 2 and game_df.loc[idx - counter][team2] == None)): # If there is a turnover, a made basket, a rebound by the winning team, or a missed shot by the winning team
-                    current_player_def_fouls_score += (def_fouls_score + defense_possession_value)
+                    positive_def_fouls += (def_fouls_score + defense_possession_value)
                     break
                 else:
                     counter += 1
         else:
-            current_player_def_fouls_score += def_fouls_score + defense_possession_value
+            negative_def_fouls += def_fouls_score + defense_possession_value
         
     
-    return current_player_def_fouls_score # Return def_fouls_score which is negative + the possession value for defense
+    return [positive_def_fouls, negative_def_fouls] # Return def_fouls_score which is negative + the possession value for defense

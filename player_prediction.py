@@ -1,6 +1,6 @@
 import pandas as pd
-from Stat_Calculations.yearly_stats import compile_team_yearly_stats, compile_yearly_stats, season_rankings_by_game
-from Stat_Calculations.compile_data import create_stats_df
+# from Stat_Calculations.yearly_stats import compile_team_yearly_stats, compile_yearly_stats, season_rankings_by_game
+# from Stat_Calculations.compile_data import create_stats_df
 import numpy as np
 import math
 from sklearn.neighbors import NearestNeighbors
@@ -595,13 +595,13 @@ def wins_contr_more_detailed_projection_df(win_loss):
 
 #wins_contr_more_detailed_projection_df(win_loss=0)
 
-def grid_search(X, y):
+def grid_search(X, y, params, test_params):
 
-    params = {'min_samples_leaf': 2, 'max_depth':6, 'subsample':.6, 'n_estimators':1500, 'min_samples_split':10, 'loss': 'ls', 'learning_rate': .01, 'subsample': .6}
+    params = params
     clf = ensemble.GradientBoostingRegressor(**params)
     
     #Choose all predictors except target & IDcols
-    param_test1 = {}
+    param_test1 = test_params
     gsearch1 = GridSearchCV(estimator = clf, 
     param_grid = param_test1, scoring='neg_mean_squared_error',n_jobs=-1,iid=False, cv=5)
     gsearch1.fit(X,np.ravel(y))
@@ -716,7 +716,7 @@ def player_projections():
     final_prediction_df.to_sql('player_projections_2020', con = engine, if_exists='replace', index=False)
     conn.close()
 
-player_projections()
+#player_projections()
 '''
 # #############################################################################
 # Plot training deviance

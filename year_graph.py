@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import copy
 from time import sleep
-from classes.teamgamelog import TeamGameLog
+# from classes.teamgamelog import TeamGameLog
 
 conn = pg2.connect(dbname= "wins_contr", host = "localhost")
 cur = conn.cursor()
@@ -13,8 +13,8 @@ season_sort = """SELECT game_id::integer,
                         team_id,
                         player_id,
                         player_name,
-                        SUM(wins_contr) AS WINS
-                 FROM reg_season_2013_14
+                        SUM(value_contributed) AS WINS
+                 FROM value_contributed_2019_20
                  WHERE win_loss = 1
                  GROUP BY game_id, player_id, player_name, team_id
                  ORDER BY game_id"""
@@ -112,4 +112,4 @@ team_colors = {1610612737:['#E03A3E', '#26282A', '#C1D32F'],
                1610612762:['#F9A01B', '#002B5C', '#00471B'],
                1610612764:[ '#E31837', '#FFFFFF', '#002B5C']}
 
-graph_season(21300001, 21301231, season_df, team_colors)
+graph_season(21900001, 21901231, season_df, team_colors)

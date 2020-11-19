@@ -13,9 +13,9 @@ cur = conn.cursor()
 # SQL Pull
 season_sort = """SELECT player_id,
                         player_name,
-                        SUM(wins_contr) AS TOTAL_WINS,
-                        AVG(wins_contr) AS PER_WIN,
-                        MAX(wins_contr) AS Max_Game
+                        SUM(value_contributed) AS TOTAL_WINS,
+                        AVG(value_contributed) AS PER_WIN,
+                        MAX(value_contributed) AS Max_Game
                         FROM playoffs_2013_14
                  where win_loss = 1
                  GROUP BY player_id, player_name

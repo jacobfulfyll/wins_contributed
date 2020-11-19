@@ -85,7 +85,7 @@ def player_timeline():
 
         save_name = player_name_list[idx].replace(' ', '_').replace("'", "").replace('.','').lower()
         print('Player Timeline: ', save_name)        
-        filepath = '/Users/jacobpress/Desktop/images_backup/images/wins_contr/player_timeline/' + save_name
+        filepath = '/Users/jacobpress/Desktop/website_s3/value_contr/player_graphs/player_timeline/' + save_name
         sns.despine(offset=10, trim=True)
         plt.savefig(filepath)
         
@@ -165,7 +165,7 @@ def player_distribution():
 
         save_name = player_name_list[idx].replace(' ', '_').replace("'", "").replace('.','').lower()
         print('Player Distribution: ', save_name)             
-        filepath = '/Users/jacobpress/Desktop/images_backup/images/wins_contr/player_distribution/' + save_name
+        filepath = '/Users/jacobpress/Desktop/website_s3/value_contr/player_graphs/player_distribution/' + save_name
         plt.savefig(filepath)
 
         #plt.show()
@@ -235,7 +235,7 @@ def player_seasons():
 
             save_name = player_name_list[idx].strip('.').replace(' ', '_').replace("'", "").replace('.','').lower()
             print('Player Career: ', save_name)              
-            filepath = '/Users/jacobpress/Desktop/images_backup/images/wins_contr/player_seasons/' + save_name
+            filepath = '/Users/jacobpress/Desktop/website_s3/value_contr/player_graphs/player_seasons/' + save_name
             plt.savefig(filepath)
             #plt.show()
             plt.close()
