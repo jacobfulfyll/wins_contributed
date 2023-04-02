@@ -3,6 +3,8 @@ from nba_api.stats.endpoints import boxscoretraditionalv2, teamgamelog
 
 def get_team_info(game_id, season, season_type):
     # Create Box Score Traditional Object and get DataFrame
+
+    # print(type(game_id))
     traditional = boxscoretraditionalv2.BoxScoreTraditionalV2(game_id=game_id)
     teams_df = traditional.team_stats.get_data_frame()
 

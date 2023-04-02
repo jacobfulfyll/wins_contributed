@@ -1,4 +1,4 @@
-import psycopg2 as pg2
+sort psycopg2 as pg2
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -376,7 +376,7 @@ def graph_dpy(season_end):
                         AND win_loss = 1
                         GROUP BY player_id, player_name;"""
 
-select ROW_NUMBER() OVER (ORDER BY a.avg_val DESC) AS No, a.player_id, a.player_name, a.avg_val from(select player_id, player_name, SUM(value_contributed) avg_val from value_contributed_2019_20 where win_loss = 1 group by player_name, player_id order by avg_val desc) a;
+# select ROW_NUMBER() OVER (ORDER BY a.avg_val DESC) AS No, a.player_id, a.player_name, a.avg_val from(select player_id, player_name, SUM(value_contributed) avg_val from value_contributed_2019_20 where win_loss = 1 group by player_name, player_id order by avg_val desc) a;
 
     defense_df = pd.read_sql(defense_query, con=conn, params={'season_end': season_end})
 

@@ -111,7 +111,7 @@ def run_season(season, start_game, end_game, season_type, sql_upload='no', playo
                 pass
 
     else:
-        game_id = '00' + season[:4].replace('0','') + '00001' #'0021600001'
+        game_id = '00' + season[:4].replace('0','', 1) + '00001' #'0021600001'
         sql_table_1 = 'value_contributed_' + str(season_end_year-1) + '_' + str(season_end_year)[-2:]
         sql_table_2 = 'possessional_adjustments_' + str(season_end_year-1) + '_' + str(season_end_year)[-2:]
         for i in range(start_game, end_game + 1):
@@ -144,7 +144,7 @@ def run_season(season, start_game, end_game, season_type, sql_upload='no', playo
                 pass
 
         #sleep(60)
-run_season('2019-20', 708, 1230, season_type="Regular Season", sql_upload='y', playoff_games_list=['0041800217'])
+run_season('2019-20', 1, 1230, season_type="Playoffs", sql_upload='y', playoff_games_list='n')
 
 # Need to figure out best way to pass year into general_df_func and play_by_play
 ''' #2018-19 Playoffs

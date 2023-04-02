@@ -2,7 +2,7 @@ import psycopg2 as pg2
 import pandas as pd
 from sqlalchemy import create_engine
 
-conn = pg2.connect(dbname= "wins_contr", host = "localhost")
+conn = pg2.connect(dbname= "personal_website", host = "localhost")
 cur = conn.cursor()
 
 all_seasons_d_d = """CREATE TABLE all_seasons_discrepancy_depth (id SERIAL PRIMARY KEY,
@@ -11,7 +11,7 @@ all_seasons_d_d = """CREATE TABLE all_seasons_discrepancy_depth (id SERIAL PRIMA
                                         team_id BIGINT NOT NULL,
                                         player_id BIGINT NOT NULL,
                                         player_name VARCHAR(50) NOT NULL,
-                                        season_type VARCHAR(20) NOT NULL,
+                                        season_type VARCHAR(20) NOT NULL,ts
                                         season_end INTEGER NOT NULL,
                                         discrepancy_total REAL NOT NULL,
                                         depth_chart_rank INTEGER NOT NULL);
@@ -102,8 +102,8 @@ discrepancy_depth_rank_df['discrepancy_total'] = discrepancy_list
 print(discrepancy_depth_rank_df)
 discrepancy_depth_rank_df = discrepancy_depth_rank_df.drop(columns='value_contributed')
 
-conn = pg2.connect(dbname = 'postgres', host = "localhost")
+conn = pg2.connect(dbname = 'personal_website', host = "localhost")
 conn.autocommit = True
-engine = create_engine('postgresql+psycopg2://jacobpress:bocaj29@localhost/wins_contr')
+engine = create_engine('postgresql+psycopg2://jacobpress:bocaj29@localhost/personal_website')
 discrepancy_depth_rank_df.to_sql('all_seasons_discrepancy_depth', con = engine, if_exists= "append", index=False)
 conn.close()
